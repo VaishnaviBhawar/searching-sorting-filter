@@ -9,6 +9,7 @@ function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("ascending");
+  const [isSearchFocused, setIsSearchFocused] = useState(false); // Track search input focus
 
   useEffect(() => {
     let tempFilteredUsers = USERS;
@@ -65,9 +66,11 @@ function App() {
         className="w-full p-2 bg-white rounded-lg border border-gray-300 mb-4"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onFocus={() => setIsSearchFocused(true)} // Track focus
+        onBlur={() => setIsSearchFocused(false)} // Track blur
       />
 
-      {searchTerm && (
+      {isSearchFocused && searchTerm && (
         <p className="text-center text-gray-500 mb-5">
           {filteredUsers.length === 0
             ? "No user found"
@@ -118,10 +121,8 @@ function App() {
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
         >
-          
-          <option value="descending">ascending</option>
-          <option value="ascending">descending</option>
-          
+          <option value="ascending">Ascending</option>
+          <option value="descending">Descending</option>
         </select>
       </div>
 
